@@ -18,7 +18,7 @@ class Cookies:
 
         for cookie in self._cookies:
             if 'sameSite' in cookie:
-                if cookie['sameSite'].lower() not in ["strict", "lax"]:
+                if cookie['sameSite'] not in ["Strict", "Lax"]:
                     cookie['sameSite'] = 'Strict'
                     
         self._curr = 0

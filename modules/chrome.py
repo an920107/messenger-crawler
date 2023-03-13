@@ -7,11 +7,11 @@ from typing import List
     
 class Chrome(webdriver.Chrome):
 
-    def find_elements_and_wait(self, by: By, value: str, millisecond: float = 5000) -> List[webdriver.WebElement]:
+    def find_elements_and_wait(self, by: By, value: str, millisecond: float = 10000) -> List[webdriver.WebElement]:
         elements = WebDriverWait(self, millisecond / 1000).until(
             expected_conditions.presence_of_all_elements_located((by, value))
         )
         return elements
 
-    def find_element_and_wait(self, by: By, value: str, millisecond: float = 5000) -> webdriver.WebElement:
+    def find_element_and_wait(self, by: By, value: str, millisecond: float = 10000) -> webdriver.WebElement:
         return self.find_elements_and_wait(by, value, millisecond)[0]
