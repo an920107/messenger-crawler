@@ -12,3 +12,4 @@
    > 取得 cookies 的插件：https://chrome.google.com/webstore/detail/editthiscookie/fngmhnnpilhplaeedifhccceomclgfbg?hl=zh-TW
 
 3. 於 `gptconfig.json` 中修改 `key` 的值
+   > 取得 ChatGPT API key：https://platform.openai.com/account/api-keys
