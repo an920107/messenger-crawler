@@ -1,5 +1,4 @@
 import json
-import pickle
 
 class Cookies:
 
@@ -7,31 +6,31 @@ class Cookies:
     The json file should be like this: `[{"name":"abc", "value":"123"}, {...}]`
     '''
     def __init__(self, filename: str) -> None:
-        self.__filename = filename
+        self._filename = filename
         
         with open(filename, "r") as file:
-            self.__cookies = json.load(file)
+            self._cookies = json.load(file)
 
-        if type(self.__cookies) != list:
+        if type(self._cookies) != list:
             raise Exception("Json file format error")
-        if type(self.__cookies[0]) != dict:
+        if type(self._cookies[0]) != dict:
             raise Exception("Json file format error")
 
-        for cookie in self.__cookies:
+        for cookie in self._cookies:
             if 'sameSite' in cookie:
                 if cookie['sameSite'] not in ["Strict", "Lax"]:
                     cookie['sameSite'] = 'Strict'
                     
-        self.__curr = 0
+        self._curr = 0
 
     def __iter__(self):
         return self
 
     def __next__(self):
-        if self.__curr >= len(self.__cookies):
+        if self._curr >= len(self._cookies):
             raise StopIteration()
-        curr, self.__curr = self[self.__curr], self.__curr + 1
+        curr, self._curr = self[self._curr], self._curr + 1
         return curr
 
     def __getitem__(self, key):
-        return self.__cookies[key].copy()
+        return self._cookies[key].copy()
