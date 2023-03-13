@@ -3,7 +3,7 @@ import json
 class Cookies:
 
     '''
-    The json file should be like this: `[{"name":"abc", "value":"123"}, {...}]`
+    The json file should be like: `[{"name": "123", "value": "abc", ...}, {...}]`
     '''
     def __init__(self, filename: str) -> None:
         self._filename = filename
@@ -18,7 +18,7 @@ class Cookies:
 
         for cookie in self._cookies:
             if 'sameSite' in cookie:
-                if cookie['sameSite'] not in ["Strict", "Lax"]:
+                if cookie['sameSite'].lower() not in ["strict", "lax"]:
                     cookie['sameSite'] = 'Strict'
                     
         self._curr = 0
