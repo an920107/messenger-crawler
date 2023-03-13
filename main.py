@@ -33,7 +33,10 @@ def main():
     while True:
 
         # 取得未讀訊息的藍色點點
-        unread_elements = chrome.find_elements_and_wait(By.XPATH, "//*[@aria-label='標示為已讀']")
+        try:
+            unread_elements = chrome.find_elements_and_wait(By.XPATH, "//*[@aria-label='標示為已讀']")
+        except:
+            continue
         for element in unread_elements:
             # 聊天室預覽框框
             chatroom_box_element = element.find_element(By.XPATH, "../../../..")
@@ -42,9 +45,15 @@ def main():
             # 聊天室最新訊息
             chatroom_message = chatroom_box_element.find_element(By.XPATH, "div[2]/div/div/span/div[2]/span/span").text
             # 進入聊天室
-            if chatroom_name not in whitelist:
-                continue
+            continue_flag = True
+            if chatroom_name in whitelist["person"]:
+                continue_flag = False
+            if chatroom_name in whitelist["group"]:
+                chatroom_message = chatroom_message[chatroom_message.find(": ") + 2:]
+                continue_flag = False
             if chatroom_message.find("對你的訊息") > -1:
+                continue_flag = True
+            if continue_flag:
                 continue
             chatroom_box_element.click()
             # 訊息輸入框
