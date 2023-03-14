@@ -1,5 +1,11 @@
-[
-    "name1",
-    "name2",
-    "name3"
-]
+{
+    "person": [
+        "name1",
+        "name2",
+        "name3"
+    ],
+    "group": [
+        "group1",
+        "group2"
+    ]
+}
