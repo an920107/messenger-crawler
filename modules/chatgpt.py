@@ -3,9 +3,7 @@ from requests.auth import HTTPBasicAuth
 import json
 import re
 
-
 class ChatGPT:
-
 
     '''
     The json file should be like: `{"key": "abc123", ...}`
@@ -13,21 +11,26 @@ class ChatGPT:
     def __init__(self, filename: str) -> None:
         self._filename = filename
         
-        with open(filename, "r", encoding="UTF8") as file:
-            self._config_dict = json.load(file)
-
-        self._auth = HTTPBasicAuth("Bearer", self._config_dict["key"])
-        
-        
 
     def post(self, text: str) -> str:
 
         URL = "https://api.openai.com/v1/chat/completions"
 
-        self._config_dict["config"]["messages"][0]["content"] = \
-            self._config_dict["prefix"] + "\n" + text
+        with open(self._filename, "r", encoding="UTF8") as file:
+            self._config_dict = json.load(file)
+
+        self._auth = HTTPBasicAuth("Bearer", self._config_dict["key"])
+
+        # self._config_dict["config"]["messages"][0]["content"] = \
+        #     self._config_dict["prefix"] + "\n" + text
+        self._config_dict["config"]["messages"].append({
+            "role": "user",
+            "content": self._config_dict["prefix"] + "\n" + text
+        })
+        #self._config_dict["config"]["messages"][0]["content"] + "\n" + 
         response = requests.post(URL, json=self._config_dict["config"], auth=self._auth)
         
+        print(self._config_dict["config"])
         print(response.text)
         
         response_text = re.search(r"\"content\":\".*?\"", response.text).group()
